@@ -5,10 +5,9 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-// import {AddMovieForm} from './add';
-import './add.css';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
+
+import { AddMovieForm } from './add';
+import { timingSafeEqual } from 'crypto';
 
 
 export class MovieFiltering extends Component {
@@ -17,52 +16,38 @@ export class MovieFiltering extends Component {
         super(props);
         this.state = {
             // fullData: data,
-            searchedData: fullData,
-            filteredData: fullData,
+            Data: fullData,
+            // filteredData: fullData,
             showAddForm: false,
 
-            Title: '',
-            Year: null,
 
-            Type: 'movie',
-            Poster: '',
+
 
             searchValue: '',
             filterValue: 0
         }
-        this.seachArray = this.seachArray.bind(this);
-        this.filterArray = this.filterArray.bind(this);
+        this.filterResults = this.filterResults.bind(this);
         this.showAddForm = this.showAddForm.bind(this);
         this.closeAddForm = this.closeAddForm.bind(this);
-        this.add = this.add.bind(this);
+        this.handleAdd = this.handleAdd.bind(this);
         // this.formControlHandler=this.formControlHandler.bind(this);
     }
 
 
-    seachArray(event) {
-        // debugger
-        const filter = event.target.value;
-        const newdata = fullData.filter((element) => element.Title.toLowerCase().includes(filter.toLowerCase()));
-        this.setState({ searchedData: newdata, filteredData: newdata, searchValue: filter, filterValue: 0 });
-        console.log(newdata);
-    }
-    filterArray(event) {
+    filterResults(event) {
         // debugger;
-        const filterValue = parseInt(event.target.value);
-        let newData;
-        switch (filterValue) {
-            case 1:
-                newData = this.state.searchedData.filter((element) => element.Watched && element.Watched === 'true');
-                break;
-            case 2:
-                newData = this.state.searchedData.filter((element) => !element.Watched || element.Watched === 'false');
-                break;
-            default:
-                newData = this.state.searchedData;
-                break;
+        const name = event.target.name;
+        const value = event.target.value;
+        const filterValue = name === 'filterValue' ? value : this.state.filterValue;
+        const title = (name === 'filterValue' ? this.state.searchValue : value).toLowerCase();
+        const cases = {
+            1: fullData.filter((element) => (element.Watched && element.Watched === 'true') && element.Title.toLowerCase().includes(title)),
+            2: fullData.filter((element) => (!element.Watched || element.Watched === 'false') && element.Title.toLowerCase().includes(title)),
+            default: fullData.filter((e) => e.Title.toLowerCase().includes(title))
         }
+        let newData = cases[filterValue] || cases.default;
+        this.setState({ Data: newData, [name]: value });
 
-        this.setState({ filteredData: newData, filterValue: filterValue });
     }
     showAddForm() {
         this.setState({ showAddForm: true });
@@ -70,26 +55,9 @@ export class MovieFiltering extends Component {
     closeAddForm() {
         this.setState({ showAddForm: false });
     }
-    inputListener(formControlName) {
-        console.log(this.state);
-        return (e) => {
-            this.setState({ [formControlName]: e.target.value });
-        }
-    }
-    add() {
-
-        let addedObject = {
-            Title: this.state.Title,
-            Year: this.state.Year,
-            Type: this.state.Type,
-            Poster: this.state.Poster,
-            imdbID: 12
-        };
-        // addedObject.imdbID=1
-        console.log(addedObject);
-        fullData.push(addedObject);
-        this.setState({ showAddForm: false, data: fullData, filterValue: 0, searchValue: '' });
-
+    handleAdd(movie) {
+        fullData.push(movie);
+        this.setState({ showAddForm: false, searchedData: fullData, filteredData: fullData, filterValue: 0, searchValue: '' });
 
     }
     render() {
@@ -104,8 +72,8 @@ export class MovieFiltering extends Component {
                             <h3>Movies</h3>
                         </Col>
                         <Col md={6} className="d-flex flex-row">
-                            <input className="form-control mr-sm-2" type="text" placeholder="Search" value={this.state.searchValue} onChange={this.seachArray} />
-                            <select onChange={this.filterArray} value={this.state.filterValue}>
+                            <input className="form-control mr-sm-2" type="text" placeholder="Search" value={this.state.searchValue} name="searchValue" onChange={this.filterResults} />
+                            <select onChange={this.filterResults} name="filterValue" value={this.state.filterValue}>
                                 <option value="0">All</option>
                                 <option value="1">Watched</option>
                                 <option value="2">Not Watched</option>
@@ -114,52 +82,11 @@ export class MovieFiltering extends Component {
                             <Button variant="secondary" className="ml-2" onClick={this.showAddForm}>+</Button>
                         </Col>
                     </Row>
-                    <MovieList moviesList={this.state.filteredData} />
+                    <MovieList moviesList={this.state.Data} />
                 </Container>
 
-                {/* {this.state.showAddForm&&<AddMovieForm/>} */}
-                {
-                    this.state.showAddForm &&
-                    <div className="my-modal-container">
-                        <Modal.Dialog >
-                            <Modal.Header >
-                                <Modal.Title>Add New Movie/Series</Modal.Title>
-                            </Modal.Header>
+                {this.state.showAddForm && <AddMovieForm addFunction={this.handleAdd} closeFunction={this.closeAddForm} />}
 
-                            <Form>
-                                <Modal.Body >
-                                    <Form.Group >
-                                        <Form.Label>Title</Form.Label>
-                                        <Form.Control type="text" onChange={this.inputListener('Title')} />
-                                    </Form.Group>
-
-                                    <Form.Group>
-                                        <Form.Label>Type</Form.Label>
-                                        <Form.Control as="select" onChange={this.inputListener('Type')}>
-                                            <option value='movie'>Movie</option>
-                                            <option value='series'>Series</option>
-                                        </Form.Control>
-                                    </Form.Group>
-                                    <Form.Group >
-                                        <Form.Label>Year</Form.Label>
-                                        <Form.Control type="text" onChange={this.inputListener('Year')} />
-                                    </Form.Group>
-                                    <Form.Group >
-                                        <Form.Label>Poster URL</Form.Label>
-                                        <Form.Control type="text" onChange={this.inputListener('Poster')} />
-                                    </Form.Group>
-
-                                </Modal.Body>
-
-                                <Modal.Footer>
-                                    <Button variant="secondary" onClick={this.closeAddForm}>Close</Button>
-                                    <Button variant="primary" onClick={this.add}>Add movie</Button>
-                                </Modal.Footer>
-                            </Form>
-                        </Modal.Dialog>
-                    </div>
-
-                }
             </>
 
         );

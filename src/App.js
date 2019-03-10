@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import './App.css';
 import { MovieFiltering } from './Components/movies/filter';
+import { PostsListing } from './Components/posts/list';
 
 class App extends Component {
   render() {
     // console.log(data);
     return (
-      // <MovieFiltering />
-      <Switch>
-        <Route path="" component={} />
-
-      </Switch>
+      <MovieFiltering />
+      // <Switch>
+      //   <Route path="/posts" component={PostsListing} />
+      //   <Route path="/posts/add" component={}
+      // </Switch>
     );
   }
 }
