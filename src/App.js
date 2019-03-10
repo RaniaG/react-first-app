@@ -1,20 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
-import data from './data';
-import { Movie } from "./Components/Movies";
+import { MovieFiltering } from './Components/movies/filter';
 
 class App extends Component {
   render() {
-    console.log(data);
+    // console.log(data);
     return (
-      <div className="container">
-        <div className="row">
-        { data.map(
-            (item)=><Movie key={item.imdbID} movie={item} />
-          )
-        }
-        </div>
-      </div>
+      // <MovieFiltering />
+      <Switch>
+        <Route path="" component={} />
+
+      </Switch>
     );
   }
 }

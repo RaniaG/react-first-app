@@ -12,6 +12,7 @@ export default [
     Year: '2011–',
     imdbID: 'tt6364492',
     Type: 'series',
+    Watched: 'true',
     Poster:
       'https://m.media-amazon.com/images/M/MV5BNGQyYjhkNDUtNmUxNC00Yjc4LWE0ZGUtMjI1YjI0MTQxMjQwL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNDAxNDE0MzY@._V1_SX300.jpg',
   },
@@ -27,6 +28,7 @@ export default [
     Year: '2014',
     imdbID: 'tt4601536',
     Type: 'movie',
+    Watched: 'true',
     Poster:
       'https://images-na.ssl-images-amazon.com/images/M/MV5BMTg5Mzg4Mjg4MV5BMl5BanBnXkFtZTgwMDAwMjczNTE@._V1_SX300.jpg',
   },
@@ -49,6 +51,7 @@ export default [
     Year: '1948',
     imdbID: 'tt4987562',
     Type: 'movie',
+    Watched: 'true',
     Poster: 'N/A',
   },
   {
