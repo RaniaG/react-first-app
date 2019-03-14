@@ -1,5 +1,7 @@
 import React from 'react';
 import { Card, Container, Col, Row } from '../../bootstrap-imports';
+import { Link } from "react-router-dom";
+
 
 
 export class PostDetails extends React.Component {
@@ -31,7 +33,10 @@ export class PostDetails extends React.Component {
                         <Card>
                             <Card.Header>
                                 <h2>{this.state.post.title}</h2>
-                                By: {this.state.user.username}
+                                By:
+                                <Link to={"/user/" + this.state.user.id}>
+                                    {this.state.user.username}
+                                </Link>
                             </Card.Header>
                             <Card.Body>
                                 <p>{this.state.post.body}</p>

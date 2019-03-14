@@ -1,6 +1,7 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card'
 import './style.scss';
+import { Link } from "react-router-dom";
 
 
 
@@ -23,7 +24,11 @@ export class PostCard extends React.Component {
                     <Card.Title>
                         {this.state.user.username}
                     </Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{this.props.title}<a href=""> Read more</a></Card.Subtitle>
+                    <Card.Subtitle className="mb-2 text-muted">{this.props.title}
+                        <Link to={"/post/" + this.props.id}>
+                            Read more
+                        </Link>
+                    </Card.Subtitle>
                 </Card.Body>
             </Card >
         )

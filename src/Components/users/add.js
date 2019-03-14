@@ -1,3 +1,11 @@
 import React from 'react';
 
-// export class 
+export class AddUser extends React.Component {
+    constructor(props) {
+
+    }
+
+    render() {
+
+    }
+}

@@ -6,7 +6,6 @@ import './App.css';
 import { UserProfile } from './Components/users/profile';
 import { Navbar, Nav } from './bootstrap-imports';
 import { Home } from './Components/home';
-import { TestComponent } from './Components/temp/temp';
 import { UserCard } from './Components/users/card';
 import { UsersList } from './Components/users/list';
 import { PostsList } from './Components/posts/list';
@@ -30,13 +29,11 @@ class App extends Component {
             </Navbar.Collapse>
           </Navbar>
           <Switch>
-            <Route path="/" exact component={Home} />
+            <Route path="/" exact component={UsersList} />
             <Route path="/user/:id" component={UserProfile} />
             <Route path="/users" exact component={UsersList} />
             <Route path="/post/:id" exact component={PostDetails} />
             <Route path="/posts" exact component={PostsList} />
-
-
           </Switch>
         </>
       </Router>
