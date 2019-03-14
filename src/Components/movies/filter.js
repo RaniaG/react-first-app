@@ -57,7 +57,7 @@ export class MovieFiltering extends Component {
     }
     handleAdd(movie) {
         fullData.push(movie);
-        this.setState({ showAddForm: false, searchedData: fullData, filteredData: fullData, filterValue: 0, searchValue: '' });
+        this.setState({ showAddForm: false, filterValue: 0, searchValue: '' });
 
     }
     render() {

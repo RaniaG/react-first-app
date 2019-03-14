@@ -1,0 +1,50 @@
+
+.user{
+    &__name{
+        font-weight: 700;
+        font-size: 20px;
+    }
+    &__email{
+        color:grey;
+        font-style: italic;
+    }
+}
+.profile{
+    &-cover{
+        height:250px;
+        background-color: cornsilk;
+    }
+    &-pic{
+        height:200px;
+        width:200px;
+        background-color: bisque;
+        position: absolute;
+        top:-200%;
+        left:10%;
+    }
+    &-body{
+        margin-top:100px;
+        min-height: 500px;
+    }
+}
+.list-group-item{
+    cursor: pointer;
+}
+.user-card{
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    
+    margin:10px;
+    &__img{
+        height: 70px;
+        width:70px;
+        border-radius: 50%;
+        background-color: antiquewhite;
+    }
+    &__name{
+        margin-left:20px;
+        font-size: 20px;
+        font-weight: 600;
+    }
+}
