@@ -30,8 +30,6 @@ export class AddUser extends React.Component {
         }
         this.onSubmit = this.onSubmit.bind(this);
         this.inputChange = this.inputChange.bind(this);
-
-
         this.validation = new SimpleSchema({
             name: {
                 type: String,
@@ -52,17 +50,14 @@ export class AddUser extends React.Component {
             },
             street: {
                 type: String,
-                min: 2,
                 max: 50,
             },
             city: {
                 type: String,
-                min: 2,
                 max: 10,
             },
             suite: {
                 type: String,
-                min: 2,
                 max: 50,
             },
             zipcode: {
@@ -123,7 +118,10 @@ export class AddUser extends React.Component {
                 .catch(() => {
                     alert("unable to create user, try again later");
                 });
-        } else alert("invalid values");
+        } else {
+            alert("invalid values");
+            this.props.history.push("/");
+        }
     }
     render() {
         return (
