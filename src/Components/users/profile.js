@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, Container, ListGroup, Table, Card, Badge } from '../../bootstrap-imports';
 import './style.scss';
 import { LoadingPage } from '../shared/loading/page';
-import { Listing } from '../shared/list';
+import { Listing } from '../shared/listing/list';
 import { PostCard } from '../posts/card';
 import { AddPost } from '../posts/add';
 

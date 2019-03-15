@@ -1,7 +1,8 @@
 import React from 'react';
 import { PostCard } from './card';
-import { Listing } from '../shared/list';
+import { Listing } from '../shared/listing/list';
 import { Row, Container, Col } from '../../bootstrap-imports';
+import { LoadingPage } from '../shared/loading/page';
 
 
 
@@ -16,20 +17,21 @@ export class PostsList extends React.Component {
     }
     render() {
         return (
+            this.state.list.length > 0 ?
+                <Container>
+                    <Row className="justify-content-center" >
+                        <Col md={3}>
+                            <h3>Blog</h3>
+                        </Col>
+                    </Row>
+                    <Row className="justify-content-center">
 
-            <Container>
-                <Row className="justify-content-center" >
-                    <Col md={3}>
-                        <h3>Blog</h3>
-                    </Col>
-                </Row>
-                <Row className="justify-content-center">
-
-                    <Col md={8}>
-                        <Listing list={this.state.list} ><PostCard /></Listing>
-                    </Col>
-                </Row>
-            </Container>
+                        <Col md={8}>
+                            <Listing list={this.state.list} ><PostCard /></Listing>
+                        </Col>
+                    </Row>
+                </Container>
+                : <LoadingPage />
         )
     }
 }

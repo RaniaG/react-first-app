@@ -1,10 +1,9 @@
 import React from 'react';
 import { UserCard } from './card';
-import { Listing } from '../shared/list';
+import { Listing } from '../shared/listing/list';
 import { Row, Container, Col, Button } from '../../bootstrap-imports';
 import { Link } from "react-router-dom";
-
-
+import { LoadingPage } from '../shared/loading/page';
 
 
 export class UsersList extends React.Component {
@@ -22,26 +21,27 @@ export class UsersList extends React.Component {
     }
     render() {
         return (
-
-            <Container>
-                <Row className="justify-content-center" >
-                    <Col md={3}>
-                        <h3 style={{ textAlign: 'center' }}>Users</h3>
-                    </Col>
-                </Row>
-                <Row className="justify-content-center">
-                    <Col md={8}>
-                        <Row className="justify-content-end p-4">
-                            <Col md={3} className="d-flex justify-content-end">
-                                <Link to="/user/add">
-                                    <Button variant="primary">+</Button>
-                                </Link>
-                            </Col>
-                        </Row>
-                        <Listing list={this.state.list} ><UserCard /></Listing>
-                    </Col>
-                </Row>
-            </Container >
+            this.state.list.length > 0 ?
+                <Container>
+                    <Row className="justify-content-center" >
+                        <Col md={3}>
+                            <h3 style={{ textAlign: 'center' }}>Users</h3>
+                        </Col>
+                    </Row>
+                    <Row className="justify-content-center">
+                        <Col md={8}>
+                            <Row className="justify-content-end p-4">
+                                <Col md={3} className="d-flex justify-content-end">
+                                    <Link to="/user/add">
+                                        <Button variant="primary">+</Button>
+                                    </Link>
+                                </Col>
+                            </Row>
+                            <Listing list={this.state.list} ><UserCard /></Listing>
+                        </Col>
+                    </Row>
+                </Container >
+                : <LoadingPage />
         )
     }
 }

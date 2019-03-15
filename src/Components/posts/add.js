@@ -46,7 +46,7 @@ export class AddPost extends React.Component {
         })
         this.setState({
             input: { ...this.state.input, [event.target.name]: event.target.value },
-            error: { ...this.state.error, ...temp }
+            error: { ...temp }
         });
 
     }

@@ -10,6 +10,7 @@ import { UserCard } from './Components/users/card';
 import { UsersList } from './Components/users/list';
 import { PostsList } from './Components/posts/list';
 import { PostDetails } from './Components/posts/details';
+import { AddUser } from './Components/users/add';
 
 class App extends Component {
   render() {
@@ -30,6 +31,7 @@ class App extends Component {
           </Navbar>
           <Switch>
             <Route path="/" exact component={UsersList} />
+            <Route path="/user/add" exact component={AddUser} />
             <Route path="/user/:id" component={UserProfile} />
             <Route path="/users" exact component={UsersList} />
             <Route path="/post/:id" exact component={PostDetails} />

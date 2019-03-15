@@ -6,112 +6,64 @@ import SimpleSchema from 'simpl-schema';
 export class AddUser extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            userData: {
-                name: '',
-                username: '',
-                email: '',
-                address: {
-                    street: '',
-                    suite: '',
-                    city: '',
-                    zipcode: '',
-
-                },
-                phone: '',
-                website: '',
-                company: {
-                    name: '',
-                    catchPhrase: '',
-                    bs: ''
-                }
-            },
-            errors: []
+        this.inputRefs = {
+            name: React.createRef(),
+            username: React.createRef(),
+            email: React.createRef(),
+            website: React.createRef(),
+            phone: React.createRef(),
+            street: React.createRef(),
+            city: React.createRef(),
+            suite: React.createRef(),
+            zip: React.createRef(),
+            companyName: React.createRef(),
+            companyCatchphrase: React.createRef(),
+            companyBs: React.createRef()
         }
         this.onSubmit = this.onSubmit.bind(this);
-        this.inputChange = this.inputChange.bind(this);
-
-
         this.validation = new SimpleSchema({
             name: {
                 type: String,
-                min: 2,
-                max: 20,
+                min: 1,
                 optional: false
             },
             username: {
                 type: String,
-                min: 2,
-                max: 20,
+                min: 1,
                 optional: false
             },
             email: {
                 type: String,
-                regEx: SimpleSchema.RegEx.Email,
-                optional: false
-            },
-            street: {
-                type: String,
-                min: 2,
-                max: 50,
-            },
-            city: {
-                type: String,
-                min: 2,
-                max: 10,
-            },
-            suite: {
-                type: String,
-                min: 2,
-                max: 50,
-            },
-            zipcode: {
-                type: Number,
-                regEx: SimpleSchema.RegEx.ZipCode,
-            },
-            phone: {
-                regEx: SimpleSchema.RegEx.Phone,
-                type: Number,
-                optional: false
-            },
-            website: String,
-            companyName: String,
-            companyCatchPhrase: String,
-            companyBs: String
+                optional: false,
+                regEx: SimpleSchema.RegEx.Email
+            }
         }).newContext();
     }
-    inputChange(name) {
-        return (e) => {
-            this.setState({ userData: { ...this.state.userData, [name]: e.target.value } })
-        }
-    }
     validationLogic() {
-        this.validation.validate(
-            {
-                name: this.state.userData.name,
-                username: this.state.userData.username,
-                email: this.state.userData.email,
-                website: this.state.userData.website,
-                phone: +(this.state.userData.phone),
-                street: this.state.userData.address.street,
-                city: this.state.userData.address.city,
-                suite: this.state.userData.address.suite,
-                zipcode: +(this.state.userData.address.zipcode),
-                companyName: this.state.userData.company.name,
-                companyCatchPhrase: this.state.userData.company.catchPhrase,
-                companyBs: this.state.userData.company.bs
-            }
-        );
-        this.setState({ errors: this.validation.validationErrors() });
-
+        var validationObject = {};
+        for (var key in this.inputRefs) {
+            validationObject[key] = this.inputRefs[key].current.value
+            this.inputRefs[key].current.classList.remove('is-invalid');
+        }
+        this.validation.validate(validationObject);
+        this.validation.validationErrors().forEach((el) => {
+            this.inputRefs[el.name].current.classList.add('is-invalid');
+        })
     }
     onSubmit(e) {
         e.preventDefault();
         this.validationLogic();
         if (this.validation.validationErrors().length == 0) {
+            //create object 
+            // var userObj = {}
+            // this.inputRefs
+
             fetch('https://jsonplaceholder.typicode.com/users', {
                 method: 'POST',
-                body: JSON.stringify(this.state.userData),
+                body: JSON.stringify(
+                    {
+
+                    }),
                 headers: {
                     "Content-type": "application/json; charset=UTF-8"
                 }
@@ -132,32 +84,30 @@ export class AddUser extends React.Component {
                     <Col md={8}>
                         <Form onSubmit={this.onSubmit}>
                             <h2 className="text-center mb-5">Add new user</h2>
-                            {
-                                this.state.errors.map((el) => <div style={{ color: 'red' }} key={el.name}>Error in {el.name}</div>)
-                            }
+
                             <Form.Row>
                                 <Form.Group as={Col} >
                                     <Form.Label>Name</Form.Label>
-                                    <Form.Control type="text" onChange={this.inputChange('name')} />
+                                    <Form.Control type="text" ref={this.inputRefs.name} />
                                 </Form.Group>
                                 <Form.Group as={Col} >
                                     <Form.Label>Username</Form.Label>
-                                    <Form.Control type="text" onChange={this.inputChange('username')} />
+                                    <Form.Control type="text" ref={this.inputRefs.username} />
                                 </Form.Group>
 
                             </Form.Row>
                             <Form.Row>
                                 <Form.Group as={Col} >
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control type="text" placeholder="email@email.com" onChange={this.inputChange('email')} />
+                                    <Form.Control type="text" placeholder="email@email.com" ref={this.inputRefs.email} />
                                 </Form.Group>
                                 <Form.Group as={Col} >
                                     <Form.Label>Website</Form.Label>
-                                    <Form.Control type="text" onChange={this.inputChange('website')} />
+                                    <Form.Control type="text" ref={this.inputRefs.website} />
                                 </Form.Group>
                                 <Form.Group as={Col} >
                                     <Form.Label>Phone</Form.Label>
-                                    <Form.Control type="text" onChange={this.inputChange('phone')} />
+                                    <Form.Control type="text" ref={this.inputRefs.phone} />
                                 </Form.Group>
                             </Form.Row>
                             <Form.Group>
@@ -165,23 +115,23 @@ export class AddUser extends React.Component {
                                 <Form.Row>
                                     <Form.Group as={Col} >
                                         <Form.Label>Street</Form.Label>
-                                        <Form.Control onChange={this.inputChange('address.street')} />
+                                        <Form.Control ref={this.inputRefs.street} />
                                     </Form.Group>
                                 </Form.Row>
                                 <Form.Row>
                                     <Form.Group as={Col} >
                                         <Form.Label>City</Form.Label>
-                                        <Form.Control onChange={this.inputChange('address.suite')} />
+                                        <Form.Control ref={this.inputRefs.city} />
                                     </Form.Group>
 
                                     <Form.Group as={Col} >
                                         <Form.Label>Suite</Form.Label>
-                                        <Form.Control onChange={this.inputChange('address.city')} />
+                                        <Form.Control ref={this.inputRefs.suite} />
                                     </Form.Group>
 
                                     <Form.Group as={Col} >
                                         <Form.Label>Zip</Form.Label>
-                                        <Form.Control onChange={this.inputChange('address.zipcode')} />
+                                        <Form.Control ref={this.inputRefs.zip} />
                                     </Form.Group>
                                 </Form.Row>
                             </Form.Group>
@@ -192,21 +142,21 @@ export class AddUser extends React.Component {
                                 <Form.Row>
                                     <Form.Group as={Col} >
                                         <Form.Label>Name</Form.Label>
-                                        <Form.Control onChange={this.inputChange('company.name')} />
+                                        <Form.Control ref={this.inputRefs.companyName} />
                                     </Form.Group>
                                 </Form.Row>
                                 <Form.Row>
 
                                     <Form.Group as={Col} >
                                         <Form.Label>Catch phrase</Form.Label>
-                                        <Form.Control onChange={this.inputChange('company.catchPhrase')} />
+                                        <Form.Control ref={this.inputRefs.companyCatchphrase} />
                                     </Form.Group>
                                 </Form.Row>
                                 <Form.Row>
 
                                     <Form.Group as={Col} >
                                         <Form.Label>bs</Form.Label>
-                                        <Form.Control onChange={this.inputChange('company.bs')} />
+                                        <Form.Control ref={this.inputRefs.companyBs} />
                                     </Form.Group>
                                 </Form.Row>
                             </Form.Group>
