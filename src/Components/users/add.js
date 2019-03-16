@@ -114,13 +114,13 @@ export class AddUser extends React.Component {
                 .then(response => response.json())
                 .then(json => {
                     alert("User was successful with id: " + json.id);
+                    this.props.history.push("/");
                 })
                 .catch(() => {
                     alert("unable to create user, try again later");
                 });
         } else {
             alert("invalid values");
-            this.props.history.push("/");
         }
     }
     render() {

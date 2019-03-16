@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import './App.css';
-// import { MovieFiltering } from './Components/movies/filter';
+import { MovieFiltering } from './Components/movies/filter';
 // import { PostsListing } from './Components/posts/list';
 import { UserProfile } from './Components/users/profile';
 import { Navbar, Nav } from './bootstrap-imports';
@@ -11,6 +11,7 @@ import { UsersList } from './Components/users/list';
 import { PostsList } from './Components/posts/list';
 import { PostDetails } from './Components/posts/details';
 import { AddUser } from './Components/users/add';
+import TodoList from './Components/todo/todo';
 
 class App extends Component {
   render() {
@@ -24,8 +25,9 @@ class App extends Component {
               <Nav className="mr-auto">
                 <Link to="/users" className="nav-link">Users</Link>
                 <Link to="/posts" className="nav-link">Blog</Link>
+                <Link to="/movies" className="nav-link">Movies</Link>
+                <Link to="/todo" className="nav-link">Todo</Link>
 
-                {/* <Nav.Link >Users</Nav.Link> */}
               </Nav>
             </Navbar.Collapse>
           </Navbar>
@@ -36,11 +38,12 @@ class App extends Component {
             <Route path="/users" exact component={UsersList} />
             <Route path="/post/:id" exact component={PostDetails} />
             <Route path="/posts" exact component={PostsList} />
+            <Route path="/movies" exact component={MovieFiltering} />
+            <Route path="/todo" exact component={TodoList} />
+
           </Switch>
         </>
       </Router>
-      // <TestComponent />
-      // <MovieFiltering />
     );
   }
 }

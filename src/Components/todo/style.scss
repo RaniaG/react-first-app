@@ -1,0 +1,18 @@
+.task-card{
+    &__body{
+        display: flex;
+        // justify-content: start;
+        align-items: center;
+        .btn{
+            margin-left: auto;
+        }
+        &.checked{
+            .task-card__title{color:grey}
+        }
+    }
+    &__title{
+        margin-left:10px;
+        margin-right:10px;
+    }
+
+}
