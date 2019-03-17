@@ -1,6 +1,6 @@
 class todoItem {
     done = false;
     deleted = false;
-    data = [];
+    data = '';
     id = null;
 }

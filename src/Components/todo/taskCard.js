@@ -17,6 +17,7 @@ class TaskCard extends React.Component {
         this.changeView = this.changeView.bind(this);
         this.changeStatus = this.changeStatus.bind(this);
         this.deleteRestore = this.deleteRestore.bind(this);
+        this.editItem = this.editItem.bind(this);
     }
     changeView() {
         this.setState({ edit: !this.state.edit });
@@ -26,6 +27,10 @@ class TaskCard extends React.Component {
     }
     deleteRestore() {
         this.props.dispatch(TodoActions.toggleDelete(this.props.id))
+    }
+    editItem(val) {
+        this.changeView();
+        this.props.dispatch(TodoActions.editItem(this.props.id, val));
     }
 
     render() {
@@ -40,8 +45,8 @@ class TaskCard extends React.Component {
                             <input type="checkbox" name="" id="" checked={done} onChange={this.changeStatus} />
                         }
                         {this.state.edit && status !== 2 ?
-                            <TextBox submit={this.changeView} /> :
-                            <span className="task-card__title" >{data}</span>
+                            <TextBox submit={this.editItem} value={data} /> :
+                            <span className="task-card__title" onDoubleClick={this.changeView}>{data}</span>
                         }
                         {
                             <Button variant="light" onClick={this.deleteRestore}>{status === 2 ? 'Restore' : 'X'}</Button>

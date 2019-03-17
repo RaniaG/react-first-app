@@ -8,7 +8,7 @@ export class TextBox extends React.Component {
         this.handleInput = this.handleInput.bind(this);
         this.checkKey = this.checkKey.bind(this);
         this.state = {
-            data: ''
+            data: this.props.value
         }
     }
     handleInput(e) {
@@ -22,9 +22,9 @@ export class TextBox extends React.Component {
     }
 
     render() {
-        const { placeholder, value } = this.props;
+        const { placeholder } = this.props;
         return (
-            <input type="text" value={value || this.state.data} className="task-card__title" onChange={this.handleInput} onKeyDown={this.checkKey} placeholder={placeholder} />
+            <input type="text" value={this.state.data} className="task-card__title" onChange={this.handleInput} onKeyDown={this.checkKey} placeholder={placeholder} />
 
         )
     }

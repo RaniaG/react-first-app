@@ -11,6 +11,7 @@ export class TodoList extends React.Component {
         this.addNew = this.addNew.bind(this);
     }
     addNew(val) {
+        if (val === '') return;
         const { dispatch } = this.props;
         dispatch(TodoActions.addNewItem(val));
     }
@@ -19,12 +20,12 @@ export class TodoList extends React.Component {
         return (
             <Container>
                 <Row >
-                    <Col md={6}>
+                    <Col md={4}>
                         <h2>Todo</h2>
                         <TextBox submit={this.addNew} placeholder="Add new Item" />
                         <Listing list={list.filter((el) => !(el.done || el.deleted))}><TaskCard status={0} /></Listing>
                     </Col>
-                    <Col md={6}>
+                    <Col md={4}>
                         <h2>Done</h2>
                         <Listing list={list.filter((el) => el.done && !el.deleted)}><TaskCard status={1} /></Listing>
                     </Col>
@@ -42,4 +43,4 @@ const mapState2Props = (state) => {
     return { list: state.todoList };
 }
 
-export default connect(mapState2Props, null)(TodoList);
+export default connect(mapState2Props)(TodoList);
