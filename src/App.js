@@ -11,9 +11,12 @@ import { UsersList } from './Components/users/list';
 import { PostsList } from './Components/posts/list';
 import { PostDetails } from './Components/posts/details';
 import { AddUser } from './Components/users/add';
-import TodoList from './Components/todo/todo';
-
+import TodoList from './Components/todo/Redux/todo';
+import { TodoContext } from './Components/todo/Context/todoHome';
 class App extends Component {
+
+
+
   render() {
     return (
 
@@ -27,7 +30,7 @@ class App extends Component {
                 <Link to="/posts" className="nav-link">Blog</Link>
                 <Link to="/movies" className="nav-link">Movies</Link>
                 <Link to="/todo" className="nav-link">Todo</Link>
-
+                <Link to="/todoContext" className="nav-link">Todo Context</Link>
               </Nav>
             </Navbar.Collapse>
           </Navbar>
@@ -40,7 +43,7 @@ class App extends Component {
             <Route path="/posts" exact component={PostsList} />
             <Route path="/movies" exact component={MovieFiltering} />
             <Route path="/todo" exact component={TodoList} />
-
+            <Route path="/todoContext" component={TodoContext} />
           </Switch>
         </>
       </Router>
