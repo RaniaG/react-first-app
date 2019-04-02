@@ -4,6 +4,8 @@ import { Listing } from '../shared/listing/list';
 import { Row, Container, Col, Button } from '../../bootstrap-imports';
 import { Link } from "react-router-dom";
 import { LoadingPage } from '../shared/loading/page';
+// import { Rating } from 'react-rating';
+var Rating = require('react-rating');
 
 
 export class UsersList extends React.Component {
@@ -20,6 +22,7 @@ export class UsersList extends React.Component {
         this.setState({ showAddForm: true });
     }
     render() {
+
         return (
             this.state.list.length > 0 ?
                 <Container>
